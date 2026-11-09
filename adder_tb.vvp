@@ -1,0 +1,64 @@
+#! /opt/homebrew/Cellar/icarus-verilog/13.0/bin/vvp
+:ivl_version "13.0 (stable)" "(v13_0)";
+:ivl_delay_selection "TYPICAL";
+:vpi_time_precision - 12;
+:vpi_module "/opt/homebrew/Cellar/icarus-verilog/13.0/lib/ivl/system.vpi";
+:vpi_module "/opt/homebrew/Cellar/icarus-verilog/13.0/lib/ivl/vhdl_sys.vpi";
+:vpi_module "/opt/homebrew/Cellar/icarus-verilog/13.0/lib/ivl/vhdl_textio.vpi";
+:vpi_module "/opt/homebrew/Cellar/icarus-verilog/13.0/lib/ivl/v2005_math.vpi";
+:vpi_module "/opt/homebrew/Cellar/icarus-verilog/13.0/lib/ivl/va_math.vpi";
+:vpi_module "/opt/homebrew/Cellar/icarus-verilog/13.0/lib/ivl/v2009.vpi";
+S_0x1010b9c70 .scope package, "$unit" "$unit" 2 1;
+ .timescale 0 0;
+S_0x1010b8b10 .scope module, "adder_tb" "adder_tb" 3 3;
+ .timescale -9 -12;
+v0x83ac500a0_0 .var "a", 7 0;
+v0x83ac50140_0 .var "b", 7 0;
+v0x83ac501e0_0 .net "sum", 8 0, L_0x83ac50280;  1 drivers
+S_0x1010b8c90 .scope module, "test" "adder" 3 7, 4 3 0, S_0x1010b8b10;
+ .timescale -9 -12;
+    .port_info 0 /INPUT 8 "a";
+    .port_info 1 /INPUT 8 "b";
+    .port_info 2 /OUTPUT 9 "sum";
+L_0x83b854010 .functor BUFT 1, C4<0>, C4<0>, C4<0>, C4<0>;
+v0x1010b9e50_0 .net/2u *"_ivl_0", 0 0, L_0x83b854010;  1 drivers
+v0x1010bf3e0_0 .net *"_ivl_2", 8 0, L_0x1010bf9c0;  1 drivers
+L_0x83b854058 .functor BUFT 1, C4<0>, C4<0>, C4<0>, C4<0>;
+v0x1010bf480_0 .net/2u *"_ivl_4", 0 0, L_0x83b854058;  1 drivers
+v0x1010bf520_0 .net *"_ivl_6", 8 0, L_0x1010bfa60;  1 drivers
+v0x1010bf5c0_0 .net "a", 7 0, v0x83ac500a0_0;  1 drivers
+v0x1010bf660_0 .net "b", 7 0, v0x83ac50140_0;  1 drivers
+v0x1010bf700_0 .net "sum", 8 0, L_0x83ac50280;  alias, 1 drivers
+L_0x1010bf9c0 .concat [ 8 1 0 0], v0x83ac500a0_0, L_0x83b854010;
+L_0x1010bfa60 .concat [ 8 1 0 0], v0x83ac50140_0, L_0x83b854058;
+L_0x83ac50280 .arith/sum 9, L_0x1010bf9c0, L_0x1010bfa60;
+S_0x1010bf7a0 .scope task, "test_add" "test_add" 3 9, 3 9 0, S_0x1010b8b10;
+ .timescale -9 -12;
+v0x1010bf920_0 .var "x", 7 0;
+v0x83ac50000_0 .var "y", 7 0;
+TD_adder_tb.test_add ;
+    %load/vec4 v0x1010bf920_0;
+    %store/vec4 v0x83ac500a0_0, 0, 8;
+    %load/vec4 v0x83ac50000_0;
+    %store/vec4 v0x83ac50140_0, 0, 8;
+    %delay 10000, 0;
+    %vpi_call/w 3 12 "$display", "%0d + %0d = %0d", v0x83ac500a0_0, v0x83ac50140_0, v0x83ac501e0_0 {0 0 0};
+    %end;
+    .scope S_0x1010b8b10;
+T_1 ;
+    %pushi/vec4 1, 0, 8;
+    %store/vec4 v0x1010bf920_0, 0, 8;
+    %pushi/vec4 1, 0, 8;
+    %store/vec4 v0x83ac50000_0, 0, 8;
+    %fork TD_adder_tb.test_add, S_0x1010bf7a0;
+    %join;
+    %vpi_call/w 3 19 "$finish" {0 0 0};
+    %end;
+    .thread T_1;
+# The file index is used to find the file name in the following table.
+:file_names 5;
+    "N/A";
+    "<interactive>";
+    "-";
+    "adder_tb.sv";
+    "adder.sv";
